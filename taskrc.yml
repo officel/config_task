@@ -1,0 +1,9 @@
+# https://taskfile.dev/docs/reference/config
+
+# Global settings
+verbose: true
+concurrency: 2
+
+# Enable experimental features
+experiments:
+  REMOTE_TASKFILES: 1
