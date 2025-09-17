@@ -1,0 +1,75 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+# vars:
+
+tasks:
+  default:
+    cmds:
+      - echo "This is {{.TASKFILE}}"
+      - task --list --sort alphanumeric -t {{.TASKFILE}}
+    silent: true
+
+  vars:env:
+    desc: show environment variables
+    aliases:
+      - ve
+    cmds:
+      - echo "HOME={{.HOME}}"
+      - echo "PWD={{.PWD}}"
+      - echo "SHELL={{.SHELL}}"
+      - echo "USER={{.USER}}"
+    silent: true
+
+  vars:special:cli:
+    desc: show special variables cli
+    aliases:
+      - vsc
+    cmds:
+      - echo "CLI_ARGS={{.CLI_ARGS}}"
+      - echo "CLI_ARGS_LIST={{.CLI_ARGS_LIST}}"
+      - echo "CLI_FORCE={{.CLI_FORCE}}"
+      - echo "CLI_SILENT={{.CLI_SILENT}}"
+      - echo "CLI_VERBOSE={{.CLI_VERBOSE}}"
+      - echo "CLI_OFFLINE={{.CLI_OFFLINE}}"
+    silent: true
+
+  vars:special:task:
+    desc: show special variables task
+    aliases:
+      - vst
+    cmds:
+      - echo "TASK={{.TASK}}"
+      - echo "ALIAS={{.ALIAS}}"
+      - echo "TASK_EXE={{.TASK_EXE}}"
+    silent: true
+
+  vars:special:path:
+    desc: show special variables
+    aliases:
+      - vsp
+    cmds:
+      - echo "ROOT_TASKFILE={{.ROOT_TASKFILE}}"
+      - echo "ROOT_DIR={{.ROOT_DIR}}"
+      - echo "TASKFILE={{.TASKFILE}}"
+      - echo "TASKFILE_DIR={{.TASKFILE_DIR}}"
+      - echo "TASK_DIR={{.TASK_DIR}}"
+      - echo "USER_WORKING_DIR={{.USER_WORKING_DIR}}"
+    silent: true
+
+  task:init:
+    desc: alternative task --init
+    summary: |
+      see https://github.com/go-task/task/issues/2012
+      This task is an alternative to `task --init`.
+      maybe `task -g new`
+    aliases:
+      - new
+    vars:
+      MY_INIT_TASKFILE:
+        sh: curl -sSL https://raw.githubusercontent.com/officel/config_task/refs/heads/main/Taskfile.yml
+      EXPORT_FILE_NAME: taskfile.yaml
+    cmds:
+      - echo "{{.MY_INIT_TASKFILE}}" > {{.USER_WORKING_DIR}}/{{.EXPORT_FILE_NAME}}
+      - echo "exported to {{.USER_WORKING_DIR}}/{{.EXPORT_FILE_NAME}}"
+      - cat {{.USER_WORKING_DIR}}/{{.EXPORT_FILE_NAME}}
