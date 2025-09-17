@@ -1,7 +1,7 @@
 # https://taskfile.dev/docs/reference/config
 
 # Global settings
-verbose: true
+verbose: false
 concurrency: 2
 
 # Enable experimental features
