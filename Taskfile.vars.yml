@@ -1,0 +1,76 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+# includes:
+
+# optional configurations (output, silent, method, run, etc.)
+
+# vars: # Use only uppercase letters for variable names
+
+# env: # followed or replaced by dotenv
+
+tasks:
+  default:
+    cmds:
+      - echo "This is {{.TASKFILE}} at v{{.TASK_VERSION}}"
+      - task --list --sort alphanumeric -t {{.TASKFILE}}
+    silent: true
+
+  env:
+    desc: show environment variables
+    aliases:
+      - e
+    cmds:
+      - echo "HOME={{.HOME}}"
+      - echo "PWD={{.PWD}}"
+      - echo "SHELL={{.SHELL}}"
+      - echo "USER={{.USER}}"
+    silent: true
+
+  special:cli:
+    desc: show special variables cli
+    aliases:
+      - sc
+    cmds:
+      - echo "CLI_ARGS={{.CLI_ARGS}}"
+      - echo "CLI_ARGS_LIST={{.CLI_ARGS_LIST}}"
+      - echo "CLI_FORCE={{.CLI_FORCE}}"
+      - echo "CLI_SILENT={{.CLI_SILENT}}"
+      - echo "CLI_VERBOSE={{.CLI_VERBOSE}}"
+      - echo "CLI_OFFLINE={{.CLI_OFFLINE}}"
+    silent: true
+
+  special:task:
+    desc: show special variables task
+    aliases:
+      - st
+    cmds:
+      - echo "TASK={{.TASK}}"
+      - echo "ALIAS={{.ALIAS}}"
+      - echo "TASK_EXE={{.TASK_EXE}}"
+    silent: true
+
+  special:path:
+    desc: show special variables
+    aliases:
+      - sp
+    cmds:
+      - echo "ROOT_TASKFILE={{.ROOT_TASKFILE}}"
+      - echo "ROOT_DIR={{.ROOT_DIR}}"
+      - echo "TASKFILE={{.TASKFILE}}"
+      - echo "TASKFILE_DIR={{.TASKFILE_DIR}}"
+      - echo "TASK_DIR={{.TASK_DIR}}"
+      - echo "USER_WORKING_DIR={{.USER_WORKING_DIR}}"
+    silent: true
+
+  special:status:
+    desc: show special variables status
+    aliases:
+      - ss
+    method: checksum
+    sources: ["{{.TASKFILE}}"]
+    status:
+      - test "{{.CHECKSUM}}" = "$(cat .last-checksum)"
+    cmds:
+      - echo "{{.CHECKSUM}}" > .last-checksum
+      - echo "LAST_CHECKSUM=$(cat .last-checksum || echo 'none')"
