@@ -2,17 +2,33 @@
 version: "3"
 
 includes:
-  v:
+  task:
+    taskfile: "~/.config/task/Taskfile.task.yml"
+    optional: true
+    internal: false
+    flatten: false
+    aliases:
+      - t
+
+  variables:
     taskfile: "~/.config/task/Taskfile.vars.yml"
     optional: true
     internal: false
     flatten: false
+    aliases:
+      - v
 
 # optional configurations (output, silent, method, run, etc.)
+silent: false
 
 # vars: # Use only uppercase letters for variable names
+vars:
+  MY_NAME: ""
 
 # env: # followed or replaced by dotenv
+dotenv:
+  - .env
+  - .env.local
 
 tasks:
   # Use kebab case for task names
@@ -23,18 +39,10 @@ tasks:
       - task --list --sort alphanumeric -t {{.TASKFILE}}
     silent: true
 
-  task:init:
-    desc: alternative task --init
-    summary: |
-      see https://github.com/go-task/task/issues/2012
-      This task is an alternative to `task --init`.
-      maybe `task -g new`
+  hello:
+    desc: Hello World by task
     aliases:
-      - new
-    vars:
-      EXPORT_FILE_NAME: taskfile.yaml
-      MY_INIT_TASKFILE: https://raw.githubusercontent.com/officel/config_task/refs/heads/main/Taskfile.yml
+      - h
     cmds:
-      - curl -sSL {{.MY_INIT_TASKFILE}} --output {{.USER_WORKING_DIR}}/{{.EXPORT_FILE_NAME}}
-      - echo "exported to {{.USER_WORKING_DIR}}/{{.EXPORT_FILE_NAME}}"
-      # - cat {{.USER_WORKING_DIR}}/{{.EXPORT_FILE_NAME}}
+      - echo "Hello, {{.MY_NAME | default .USER}}! Welcome to Task v{{.TASK_VERSION}}"
+    silent: true

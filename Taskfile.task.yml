@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+vars:
+  EXPORT_FILE_NAME: taskfile.yaml
+  MY_INIT_TASKFILE: https://raw.githubusercontent.com/officel/config_task/refs/heads/main/Taskfile.yml
+
+tasks:
+  init:
+    desc: alternative task --init
+    summary: |
+      see https://github.com/go-task/task/issues/2012
+      This task is an alternative to `task --init`.
+      maybe `task -g new`
+    aliases:
+      - new
+    cmds:
+      - curl -sSL {{.MY_INIT_TASKFILE}} --output {{.USER_WORKING_DIR}}/{{.EXPORT_FILE_NAME}}
+      - echo "exported to {{.USER_WORKING_DIR}}/{{.EXPORT_FILE_NAME}}"
+      # - cat {{.USER_WORKING_DIR}}/{{.EXPORT_FILE_NAME}}
