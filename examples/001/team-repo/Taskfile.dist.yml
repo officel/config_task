@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+# https://taskfile.dev/
+
+version: '3'
+
+# includes:
+
+# vars:
+
+# env:
+
+tasks:
+  default:
+    silent: true
+    cmds:
+      - task --list --sort alphanumeric -t {{.TASKFILE}}
+
+  work:
+    desc: Work
+    aliases:
+      - w
+    cmds:
+      - echo "{{.TASK}} {{.ALIAS}}"
+
+  link:
+    desc: link to Taskfile.yml
+    cmds:
+      - ln -s ../my-repo/Taskfile.yml Taskfile.yml

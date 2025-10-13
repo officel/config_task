@@ -1,0 +1,52 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+# https://taskfile.dev/
+
+version: '3'
+
+includes:
+  frontend:
+    taskfile: Taskfile.frontend.yml
+    optional: true
+    internal: false
+    flatten: false
+  backend:
+    taskfile: Taskfile.backend.yml
+    optional: true
+    internal: false
+    flatten: false
+  infra:
+    taskfile: Taskfile.infra.yml
+    optional: true
+    internal: false
+    flatten: false
+
+# vars:
+
+# env:
+
+tasks:
+  default:
+    silent: true
+    cmds:
+      - task --list --sort alphanumeric -t {{.TASKFILE}}
+
+  f:a:
+    desc: Clean,Build,Deploy frontend
+    cmds:
+      - task: frontend:clean
+      - task: frontend:build
+      - task: frontend:deploy
+
+  b:a:
+    desc: Clean,Build,Deploy backend
+    cmds:
+      - task: backend:clean
+      - task: backend:build
+      - task: backend:deploy
+
+  i:a:
+    desc: Clean,Build,Deploy infra
+    cmds:
+      - task: infra:clean
+      - task: infra:build
+      - task: infra:deploy

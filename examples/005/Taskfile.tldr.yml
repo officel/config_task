@@ -1,0 +1,50 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+# https://taskfile.dev/
+
+version: '3'
+
+# includes:
+
+vars:
+  MY_TASKFILE_OPTION:
+    sh: |
+      # include されていない場合はオプション付きで実行する
+      if [ {{.ROOT_TASKFILE}} = {{.TASKFILE}} ];then
+        echo '-t {{.TASKFILE}}'
+      else
+        echo ''
+      fi
+
+# env:
+
+tasks:
+  default:
+    silent: true
+    cmds:
+      - echo "{{.MY_TASKFILE_OPTION}}"
+      - task --list --sort alphanumeric -t {{.TASKFILE}}
+
+  git:
+    desc: tldr git
+    summary: |
+
+      # remote HEAD がない
+      git remote set-head origin main
+
+      # リモートのタグを表示
+      git ls-remote --tags
+
+      # delete remote branch
+      git push origin :branch_name
+
+      # ファイルをリポジトリに追加しておき、以降はトラッキングしない
+      git update-index --skip-worktree FILE
+
+      # 変更を取り込む時は
+      git update-index --no-skip-worktree FILE
+
+      # working tree の設定確認
+      git ls-files -v
+    cmds:
+      - task {{.MY_TASKFILE_OPTION}} {{.ALIAS}} --summary
+    silent: true
