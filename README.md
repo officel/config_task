@@ -25,6 +25,12 @@ alias t='task'
 t
 ```
 
+# note
+
+- [go-task/task: A task runner / simpler Make alternative written in Go](https://github.com/go-task/task)
+- [モダンなタスクランナーを求めて task (taskfile.dev) を使うまでの軌跡](https://zenn.dev/raki/articles/2024-05-30_task_runner)
+- [Taskfile.yml のスタイルガイドに沿ったテンプレート](https://zenn.dev/raki/articles/2024-11-19_taskfile_style_guide)
+
 # related my projects
 
 - [officel/config_aqua: .config/aqua](https://github.com/officel/config_aqua)

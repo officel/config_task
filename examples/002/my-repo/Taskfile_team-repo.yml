@@ -1,0 +1,39 @@
+
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+# https://taskfile.dev/
+
+version: '3'
+
+includes:
+  dist:
+    taskfile: ./Taskfile.dist.yml
+    # internal: true
+    optional: true
+    # flatten: true
+
+vars:
+  test: "test value."
+
+# env:
+
+tasks:
+  default:
+    summary: |
+      default task is list tasks.
+    cmds:
+      - echo "{{.TASKFILE}}":"{{.TASK}}"
+      # - task --list --sort alphanumeric
+      - task: dist:default
+    silent: true
+    aliases:
+      - ls
+
+  summary:
+    desc: view summary of all tasks
+    summary: |
+      全タスクのサマリー出力
+    aliases:
+      - la
+    cmd: task --list-all --sort alphanumeric -j | jq -cr ".tasks[].name" | xargs -i sh -c 'task --summary {}; echo "\n---\n"'
+    silent: true
+    dir: '{{.USER_WORKING_DIR}}'

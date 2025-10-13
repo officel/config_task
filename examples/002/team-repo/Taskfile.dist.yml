@@ -1,0 +1,71 @@
+
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+# https://taskfile.dev/
+
+version: '3'
+
+includes:
+  tests:
+    taskfile: ./Taskfile_tests.yml
+    internal: true
+    optional: true
+
+vars:
+  test: "test value."
+
+# env:
+
+tasks:
+  default:
+    summary: |
+      default task is list tasks.
+    cmds:
+      - echo "{{.TASKFILE}}":"{{.TASK}}"
+      - task --list --sort alphanumeric
+    silent: true
+    aliases:
+      - ls
+
+  summary:
+    desc: view summary of all tasks
+    summary: |
+      全タスクのサマリー出力
+    aliases:
+      - la
+    cmd: task --list-all --sort alphanumeric -j | jq -cr ".tasks[].name" | xargs -i sh -c 'task --summary {}; echo "\n---\n"'
+    silent: true
+    dir: '{{.USER_WORKING_DIR}}'
+
+  test:
+    desc: task tests
+    aliases:
+      - tt
+    cmds:
+      - task: tests:all
+
+  seq:
+    desc: run sequence check
+    preconditions:
+      - sh: test -f .env
+        msg: "必要なファイルが存在したら実行する"
+        # 環境変数や所定のファイル等の事前チェックをする
+      - sh: '[ 1 = 1 ]'
+        msg: "1 = 1 なら実行する"
+        #
+    status:
+      - test -f gomi
+      # ファイルが存在したら実行しない
+    cmds:
+      - echo "cmds"
+      - defer: echo "defer 1"
+
+  caller:
+    desc: caller task
+    cmds:
+      - task: callee
+        env:
+          FOO: bar
+
+  callee:
+    cmds:
+      - echo "${FOO}"

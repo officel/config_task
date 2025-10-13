@@ -1,0 +1,39 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+# https://taskfile.dev/
+
+version: '3'
+
+# includes:
+
+# optional configurations (output, silent, method, run, etc.)
+
+# vars:
+## use UPPERCASE
+
+# env:
+
+tasks:
+  default:
+    cmds:
+      - task --list-all --sort alphabetically -t {{.TASKFILE}}
+      - task: study
+    silent: true
+
+  study:
+    desc: Today's Study
+    vars:
+      _TARGET:
+        - "act"
+        - "k8s"
+        - "go-task"
+        - "terraform"
+        - "ansible"
+        - "mermaid.js"
+        - "uv"
+      _I:
+        ref: randInt 0 (len ._TARGET)
+      _T:
+        ref: index ._TARGET ._I
+    cmds:
+      - echo "Let's study:" {{._T}}
+    silent: true

@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+# https://taskfile.dev/
+
+version: '3'
+
+# includes:
+
+# vars:
+
+# env:
+
+tasks:
+  default:
+    silent: true
+    cmds:
+      - task --list --sort alphanumeric -t {{.TASKFILE}}
+
+  build:
+    desc: Build
+    aliases:
+      - b
+    cmds:
+      - echo "build {{.ALIAS}}"
+
+  clean:
+    desc: Clean
+    aliases:
+      - c
+    cmds:
+      - echo "clean {{.ALIAS}}"
+
+  deploy:
+    desc: Deploy
+    aliases:
+      - d
+    cmds:
+      - echo "deploy {{.ALIAS}}"
