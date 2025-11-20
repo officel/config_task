@@ -18,3 +18,15 @@ tasks:
       - curl -sSL {{.MY_INIT_TASKFILE}} --output {{.USER_WORKING_DIR}}/{{.EXPORT_FILE_NAME}}
       - echo "exported to {{.USER_WORKING_DIR}}/{{.EXPORT_FILE_NAME}}"
       # - cat {{.USER_WORKING_DIR}}/{{.EXPORT_FILE_NAME}}
+
+  help:
+    desc: task command help
+    summary: |
+      show this help message
+      required glow command
+    aliases:
+      - h
+      - "?"
+    vars:
+      HELP_FILE: "./taskfile_help.md"
+    cmd: glow --width=0 {{.HELP_FILE}}
