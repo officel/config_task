@@ -1,5 +1,8 @@
 # config_task
 
+>[!IMPORTANT]
+> dotfiles の式年遷宮に伴い移動しました。[移動先はこちら](https://github.com/officel/dotfiles/)
+
 - [Task](https://taskfile.dev/)
 - 2025-09-16 v3.45.3 のリリースで `$XDG_CONFIG_HOME/task/taskrc.yml` が使用可能になったのでテスト
 
